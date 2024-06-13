@@ -1,0 +1,1 @@
+=IF(AND(ISNUMBER(VALUE(MID(A1, LEN(A1)-1, 1))), RIGHT(A1, 1)=")"), A1, "")
