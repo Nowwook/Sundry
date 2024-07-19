@@ -102,5 +102,7 @@
 
 
 22. 매서드 펼치기, 접기
-  Ctrl + M + O
-  Ctrl + M + P
+  Ctrl + M + O : 현재 파일 접기
+  Ctrl + M + P : 현재 파일 펼치고 outlining도 없애기
+  Ctrl + M + L : 현재 파일 펼치기
+  Ctrl + M + M : 현재 커서가 있는 섹션 접기 또는 펼치기
