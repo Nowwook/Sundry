@@ -1,0 +1,60 @@
+Sub FindNonZeroInUVColumns()
+    Dim wb As Workbook
+    Dim ws As Worksheet
+    Dim folderPath As String
+    Dim fileName As String
+    Dim lastRow As Long
+    Dim resultSheet As Worksheet
+    Dim resultRow As Long
+    Dim cell As Range
+    
+    ' 결과를 기록할 새 워크시트 생성
+    Set resultSheet = ThisWorkbook.Sheets.Add
+    resultSheet.Name = "Results"
+    resultRow = 1
+    resultSheet.Cells(resultRow, 1).Value = "파일명"
+    resultSheet.Cells(resultRow, 2).Value = "워크시트명"
+    resultSheet.Cells(resultRow, 3).Value = "셀 주소"
+    resultSheet.Cells(resultRow, 4).Value = "셀 값"
+    resultRow = resultRow + 1
+    
+    ' 엑셀 파일이 있는 폴더 경로
+    folderPath = "C:\Your\Folder\Path\" ' 실제 폴더 경로로 수정하세요.
+    fileName = Dir(folderPath & "*.xls*")
+    
+    ' 폴더 내 모든 엑셀 파일을 순회
+    Do While fileName <> ""
+        Set wb = Workbooks.Open(folderPath & fileName)
+        
+        ' 각 워크시트를 순회
+        For Each ws In wb.Sheets
+            lastRow = ws.Cells(ws.Rows.Count, "U").End(xlUp).Row
+            
+            ' U 및 V 열을 순회하여 0이 아닌 값 찾기
+            For Each cell In ws.Range("U1:U" & lastRow)
+                If cell.Value <> 0 And cell.Value <> "" Then
+                    resultSheet.Cells(resultRow, 1).Value = fileName
+                    resultSheet.Cells(resultRow, 2).Value = ws.Name
+                    resultSheet.Cells(resultRow, 3).Value = cell.Address
+                    resultSheet.Cells(resultRow, 4).Value = cell.Value
+                    resultRow = resultRow + 1
+                End If
+            Next cell
+            
+            For Each cell In ws.Range("V1:V" & lastRow)
+                If cell.Value <> 0 And cell.Value <> "" Then
+                    resultSheet.Cells(resultRow, 1).Value = fileName
+                    resultSheet.Cells(resultRow, 2).Value = ws.Name
+                    resultSheet.Cells(resultRow, 3).Value = cell.Address
+                    resultSheet.Cells(resultRow, 4).Value = cell.Value
+                    resultRow = resultRow + 1
+                End If
+            Next cell
+        Next ws
+        
+        wb.Close False
+        fileName = Dir
+    Loop
+    
+    MsgBox "검색 완료!"
+End Sub
