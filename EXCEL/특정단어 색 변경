@@ -119,3 +119,38 @@ Sub ChangeColorForSPWord()
 End Sub
 
 
+
+
+
+Sub ChangeSpecificWordColor()
+    Dim ws As Worksheet
+    Dim cell As Range
+    Dim wordToColor As String
+    Dim startPos As Long
+    Dim wordLength As Long
+
+    ' 설정: 색 변경할 단어
+    wordToColor = " DELETE "
+    
+    ' 현재 워크시트 지정
+    Set ws = ThisWorkbook.Sheets(15) ' 시트 번호
+
+    ' 워크시트 내 모든 셀 반복
+    For Each cell In ws.UsedRange
+        If Not IsEmpty(cell.Value) And VarType(cell.Value) = vbString Then
+            startPos = InStr(1, cell.Value, wordToColor, vbTextCompare)
+            wordLength = Len(wordToColor)
+            
+            ' 단어가 존재하면 색상 변경
+            Do While startPos > 0
+                With cell.Characters(startPos, wordLength).Font
+                    .Color = RGB(153, 0, 0)
+                End With
+                ' 다음 위치 검색
+                startPos = InStr(startPos + wordLength, cell.Value, wordToColor, vbTextCompare)
+            Loop
+        End If
+    Next cell
+    
+    MsgBox "작업 완료"
+End Sub
