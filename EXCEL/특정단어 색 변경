@@ -121,7 +121,7 @@ End Sub
 
 
 
-
+한번에 한 시트만 하고 저장
 Sub ChangeSpecificWordColor()
     Dim ws As Worksheet
     Dim cell As Range
