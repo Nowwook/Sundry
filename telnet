@@ -1,0 +1,14 @@
+제어판 → 프로그램 및 기능 → Windows 기능 켜기/끄기에서 Telnet Client를 활성화
+
+telnet [호스트] [포트]
+
+telnet 192.168.1.100 80
+
+telnet mail.example.com 25
+
+
+종료
+Ctrl + ]를 누른 후, quit 
+
+보안을 위해
+ssh 사용자이름@서버주소
