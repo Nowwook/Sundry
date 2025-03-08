@@ -1,0 +1,20 @@
+Microsoft Build Engine 는 C#을 포함한 .NET 프로젝트를 빌드하는 공식 도구
+
+Visual Studio에서 실행
+Ctrl + Shift + B 단축키를 사용하거나
+메뉴에서 빌드(Build) → 솔루션 빌드(Build Solution) 선택
+
+MSBuild는 XML 기반의 프로젝트 파일(.csproj 또는 .vbproj) 을 사용하여 빌드 작업을 정의
+
+<PropertyGroup> : 프로젝트의 주요 설정 (출력 형식, .NET 버전 등)
+<ItemGroup> : 패키지 또는 파일 포함/제외 설정
+
+속성
+/p:ProjectDir      프로젝트 폴더 경로
+/p:OutDir          빌드 출력 폴더
+/p:Configuration   빌드 구성(Debug/Release)
+/p:Platform        플랫폼(x86, x64, AnyCPU)
+/p:AssemblyName    Assembl 이름
+
+ex)
+msbuild MyProject.csproj /p:Configuration=Release /p:Platform=x64
