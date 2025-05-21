@@ -1,0 +1,23 @@
+Sub CompareAndInsertRows()
+    Dim ws1 As Worksheet, ws2 As Worksheet
+    Dim lastRow1 As Long, i As Long
+    Dim val1 As String, val2 As String
+    
+    Set ws1 = ThisWorkbook.Sheets("Sheet1")
+    Set ws2 = ThisWorkbook.Sheets("Sheet2")
+    
+    lastRow1 = ws1.Cells(ws1.Rows.Count, 1).End(xlUp).Row
+    
+    i = 1
+    Do While i <= lastRow1
+        val1 = ws1.Cells(i, 1).Value
+        val2 = ws2.Cells(i, 1).Value
+        
+        If val1 <> val2 Then
+            ws2.Rows(i).Insert Shift:=xlDown
+            ws2.Cells(i, 1).Value = "" ' 빈 값 유지
+        End If
+        i = i + 1
+        lastRow1 = ws1.Cells(ws1.Rows.Count, 1).End(xlUp).Row
+    Loop
+End Sub
