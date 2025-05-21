@@ -1,23 +1,36 @@
-Sub CompareAndInsertRows()
+Sub CompareAndAlignSheets()
     Dim ws1 As Worksheet, ws2 As Worksheet
-    Dim lastRow1 As Long, i As Long
+    Dim lastRow1 As Long, lastRow2 As Long
+    Dim i As Long
     Dim val1 As String, val2 As String
     
     Set ws1 = ThisWorkbook.Sheets("Sheet1")
     Set ws2 = ThisWorkbook.Sheets("Sheet2")
     
-    lastRow1 = ws1.Cells(ws1.Rows.Count, 1).End(xlUp).Row
-    
     i = 1
-    Do While i <= lastRow1
+    Do While True
         val1 = ws1.Cells(i, 1).Value
         val2 = ws2.Cells(i, 1).Value
         
+        ' 종료 조건: 둘 다 빈 셀
+        If val1 = "" And val2 = "" Then Exit Do
+        
         If val1 <> val2 Then
-            ws2.Rows(i).Insert Shift:=xlDown
-            ws2.Cells(i, 1).Value = "" ' 빈 값 유지
+            If val1 = "" Then
+                ' Sheet1 비어있고 Sheet2에 값이 있다면 Sheet1에 빈 행 삽입
+                ws1.Rows(i).Insert Shift:=xlDown
+            ElseIf val2 = "" Then
+                ' Sheet2 비어있고 Sheet1에 값이 있다면 Sheet2에 빈 행 삽입
+                ws2.Rows(i).Insert Shift:=xlDown
+            ElseIf WorksheetFunction.CountIf(ws1.Range("A:A"), val2) = 0 Then
+                ' Sheet2의 값이 Sheet1에 없음 → Sheet1에 빈 행 삽입
+                ws1.Rows(i).Insert Shift:=xlDown
+            ElseIf WorksheetFunction.CountIf(ws2.Range("A:A"), val1) = 0 Then
+                ' Sheet1의 값이 Sheet2에 없음 → Sheet2에 빈 행 삽입
+                ws2.Rows(i).Insert Shift:=xlDown
+            End If
         End If
+        
         i = i + 1
-        lastRow1 = ws1.Cells(ws1.Rows.Count, 1).End(xlUp).Row
     Loop
 End Sub
